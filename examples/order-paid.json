@@ -1,0 +1,9 @@
+{
+  "id": 820982911946154500,
+  "name": "#1042",
+  "email": "buyer@example.com",
+  "line_items": [
+    { "id": 466157049, "sku": "NFC-RING-SILVER", "quantity": 1, "title": "Signature Ring (NFC)" },
+    { "id": 518995019, "sku": "GIFTBOX-STD", "quantity": 1, "title": "Gift Box" }
+  ]
+}

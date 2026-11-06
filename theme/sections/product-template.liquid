@@ -1,0 +1,144 @@
+<section class="product-template" data-section-id="{{ section.id }}" data-section-type="product">
+  <div class="page-width">
+    <div class="product__grid">
+      <div class="product__media-wrapper">
+        {%- if product.media.size > 0 -%}
+          <div class="product__media-list">
+            {%- for media in product.media -%}
+              <div class="product__media-item" data-media-id="{{ media.id }}">
+                {%- case media.media_type -%}
+                  {%- when 'image' -%}
+                    {{ media | image_url: width: 1200 | image_tag:
+                      loading: 'lazy',
+                      class: 'product__image',
+                      sizes: '(min-width: 990px) 60vw, 100vw',
+                      widths: '246, 493, 600, 713, 823, 990, 1100, 1206, 1346, 1426, 1646, 1946'
+                    }}
+                  {%- when 'video' -%}
+                    {{ media | video_tag: controls: true, class: 'product__video' }}
+                  {%- when 'external_video' -%}
+                    {{ media | external_video_tag: class: 'product__video' }}
+                  {%- when 'model' -%}
+                    {{ media | model_viewer_tag: class: 'product__model' }}
+                {%- endcase -%}
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- else -%}
+          {{ 'product-1' | placeholder_svg_tag: 'product__image--placeholder' }}
+        {%- endif -%}
+      </div>
+
+      <div class="product__info-wrapper">
+        {%- if section.settings.show_vendor and product.vendor != blank -%}
+          <p class="product__vendor">{{ product.vendor }}</p>
+        {%- endif -%}
+
+        <h1 class="product__title">{{ product.title }}</h1>
+
+        {% render 'price', product: product %}
+
+        {%- if product.description != blank -%}
+          <div class="product__description rte">
+            {{ product.description }}
+          </div>
+        {%- endif -%}
+
+        {% form 'product', product, id: 'product-form' %}
+          {%- unless product.has_only_default_variant -%}
+            <div class="product__variants">
+              {%- for option in product.options_with_values -%}
+                <div class="product-option">
+                  <label class="product-option__label">{{ option.name }}</label>
+                  <div class="product-option__values">
+                    {%- for value in option.values -%}
+                      <input
+                        type="radio"
+                        id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+                        name="{{ option.name }}"
+                        value="{{ value | escape }}"
+                        form="product-form"
+                        {% if option.selected_value == value %}checked{% endif %}
+                      >
+                      <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
+                        {{ value }}
+                      </label>
+                    {%- endfor -%}
+                  </div>
+                </div>
+              {%- endfor -%}
+            </div>
+          {%- endunless -%}
+
+          <div class="product__quantity">
+            <label for="Quantity-{{ section.id }}">Quantity</label>
+            <input
+              type="number"
+              name="quantity"
+              id="Quantity-{{ section.id }}"
+              min="1"
+              value="1"
+            >
+          </div>
+
+          <div class="product__buttons">
+            <button
+              type="submit"
+              name="add"
+              class="product__add-button button button--primary"
+              {% unless product.available %}disabled{% endunless %}
+            >
+              {%- if product.available -%}
+                {{ 'products.product.add_to_cart' | t }}
+              {%- else -%}
+                {{ 'products.product.sold_out' | t }}
+              {%- endif -%}
+            </button>
+          </div>
+
+          {{ form | payment_button }}
+        {% endform %}
+
+        {%- if section.settings.show_share_buttons -%}
+          <div class="product__share">
+            {% render 'social-sharing', share_title: product.title, share_permalink: product.url, share_image: product.featured_image %}
+          </div>
+        {%- endif -%}
+
+        {%- comment -%} NFC Technology Info {%- endcomment -%}
+        {%- if section.settings.show_nfc_info -%}
+          <div class="product__nfc-info">
+            <h3>NFC Technology</h3>
+            <p>This product features integrated NFC technology, allowing you to personalize and share digital content with a simple tap.</p>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product Information",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "Show Vendor",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_share_buttons",
+      "label": "Show Social Share Buttons",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_nfc_info",
+      "label": "Show NFC Technology Information",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

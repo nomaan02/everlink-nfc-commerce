@@ -1,0 +1,173 @@
+{
+  "sections": {
+    "announcement_bar": {
+      "type": "announcement-bar",
+      "settings": {
+        "enable_announcement": true,
+        "announcement_text": "Welcome to everlink - Free shipping on orders over $100",
+        "announcement_link": "",
+        "announcement_bg_color": "#6BA4CE",
+        "announcement_text_color": "#FFFFFF"
+      }
+    },
+    "hero_banner": {
+      "type": "hero-banner",
+      "settings": {
+        "heading": "everlink",
+        "subheading": "a new era of personalisation",
+        "text": "<p>Luxury heirlooms driven by the latest in NFC technology</p>",
+        "button_label": "Shop Collection",
+        "button_link": "/collections/all",
+        "button_label_2": "Learn More",
+        "button_link_2": "/pages/about",
+        "text_alignment": "center",
+        "background_color": "#E8F4F8",
+        "heading_color": "#6BA4CE",
+        "text_color": "#2C2C2C",
+        "image_opacity": 30,
+        "section_height": 80,
+        "section_height_mobile": 70
+      }
+    },
+    "product_categories": {
+      "type": "product-categories",
+      "blocks": {
+        "category_1": {
+          "type": "category",
+          "settings": {
+            "title": "Rings",
+            "description": "Elegant NFC-enabled rings",
+            "link": "/collections/rings"
+          }
+        },
+        "category_2": {
+          "type": "category",
+          "settings": {
+            "title": "Bracelets",
+            "description": "Smart luxury bracelets",
+            "link": "/collections/bracelets"
+          }
+        },
+        "category_3": {
+          "type": "category",
+          "settings": {
+            "title": "Necklaces",
+            "description": "Timeless NFC necklaces",
+            "link": "/collections/necklaces"
+          }
+        }
+      },
+      "block_order": ["category_1", "category_2", "category_3"],
+      "settings": {
+        "heading": "Shop by Category",
+        "subheading": "Explore our collections of luxury NFC jewelry",
+        "background_color": "#F8FBFD",
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
+    },
+    "featured_products": {
+      "type": "featured-products",
+      "settings": {
+        "heading": "Featured Collection",
+        "subheading": "Discover our handcrafted luxury pieces",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "columns_mobile": 2,
+        "show_vendor": false,
+        "show_secondary_image": true,
+        "show_view_all": true,
+        "button_text": "View All",
+        "background_color": "#FFFFFF",
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
+    },
+    "about_us": {
+      "type": "about-us",
+      "settings": {
+        "heading": "About Everlink",
+        "text": "<p>We combine timeless luxury jewelry with cutting-edge NFC technology to create personalized heirlooms for the modern age. Each piece tells your unique story, seamlessly blending traditional craftsmanship with innovative technology.</p>",
+        "button_label": "Our Story",
+        "button_link": "/pages/about",
+        "background_color": "#F8FBFD",
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "blocks": {
+        "testimonial_1": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "The NFC technology in my everlink bracelet has completely changed how I share my contact information. It's elegant and functional.",
+            "author": "Sarah Johnson",
+            "author_title": "Verified Customer",
+            "rating": 5
+          }
+        },
+        "testimonial_2": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "I love how I can update the content on my ring anytime. It's the perfect blend of luxury and technology.",
+            "author": "Michael Chen",
+            "author_title": "Verified Customer",
+            "rating": 5
+          }
+        },
+        "testimonial_3": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "The craftsmanship is exceptional. This isn't just jewelry, it's a smart accessory that I use every day.",
+            "author": "Emma Williams",
+            "author_title": "Verified Customer",
+            "rating": 5
+          }
+        }
+      },
+      "block_order": ["testimonial_1", "testimonial_2", "testimonial_3"],
+      "settings": {
+        "heading": "What Our Customers Say",
+        "background_color": "#FFFFFF",
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
+    },
+    "partner_logos": {
+      "type": "partner-logos",
+      "settings": {
+        "heading": "As Featured In",
+        "background_color": "#F8FBFD",
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "heading": "Stay Connected",
+        "subheading": "Subscribe to receive updates about new collections and exclusive offers",
+        "placeholder_text": "Enter your email",
+        "button_text": "Subscribe",
+        "success_message": "Thank you for subscribing!",
+        "show_privacy_notice": true,
+        "privacy_notice": "We respect your privacy and will never share your email.",
+        "background_color": "#E8F4F8",
+        "heading_color": "#6BA4CE",
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
+    }
+  },
+  "order": [
+    "announcement_bar",
+    "hero_banner",
+    "product_categories",
+    "featured_products",
+    "about_us",
+    "testimonials",
+    "partner_logos",
+    "newsletter"
+  ]
+}

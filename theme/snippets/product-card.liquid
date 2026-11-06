@@ -1,0 +1,67 @@
+{%- comment -%}
+  Renders a product card
+
+  Accepts:
+  - product: {Object} Product object
+  - show_vendor: {Boolean} Show vendor name
+  - show_secondary_image: {Boolean} Show second image on hover
+
+  Usage:
+  {% render 'product-card', product: product %}
+{%- endcomment -%}
+
+<div class="product-card">
+  <a href="{{ product.url }}" class="product-card__link">
+    <div class="product-card__image-wrapper">
+      {%- if product.featured_image -%}
+        {{ product.featured_image | image_url: width: 600 | image_tag:
+          loading: 'lazy',
+          class: 'product-card__image product-card__image--primary',
+          sizes: '(min-width: 990px) 25vw, (min-width: 750px) 33vw, 50vw',
+          widths: '165, 360, 535, 750, 1070, 1200'
+        }}
+
+        {%- if show_secondary_image and product.images[1] -%}
+          {{ product.images[1] | image_url: width: 600 | image_tag:
+            loading: 'lazy',
+            class: 'product-card__image product-card__image--secondary',
+            sizes: '(min-width: 990px) 25vw, (min-width: 750px) 33vw, 50vw',
+            widths: '165, 360, 535, 750, 1070, 1200'
+          }}
+        {%- endif -%}
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag: 'product-card__image product-card__image--placeholder' }}
+      {%- endif -%}
+
+      {%- if product.compare_at_price > product.price -%}
+        <span class="product-card__badge product-card__badge--sale">
+          {{ 'products.product.on_sale' | t }}
+        </span>
+      {%- endif -%}
+
+      {%- unless product.available -%}
+        <span class="product-card__badge product-card__badge--sold-out">
+          {{ 'products.product.sold_out' | t }}
+        </span>
+      {%- endunless -%}
+    </div>
+
+    <div class="product-card__info">
+      {%- if show_vendor and product.vendor != blank -%}
+        <p class="product-card__vendor">{{ product.vendor }}</p>
+      {%- endif -%}
+
+      <h3 class="product-card__title">{{ product.title }}</h3>
+
+      {% render 'price', product: product %}
+    </div>
+  </a>
+
+  <div class="product-card__actions">
+    {%- if product.available -%}
+      <button type="button" class="product-card__quick-add button button--secondary" data-product-id="{{ product.id }}">
+        Quick Add
+      </button>
+    {%- endif -%}
+  </div>
+</div>

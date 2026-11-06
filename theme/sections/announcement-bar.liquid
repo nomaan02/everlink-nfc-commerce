@@ -1,0 +1,54 @@
+{%- if section.settings.enable_announcement -%}
+  <div class="announcement-bar" role="region" aria-label="{{ 'sections.header.announcement' | t }}">
+    <div class="announcement-bar__container page-width">
+      {%- if section.settings.announcement_link != blank -%}
+        <a href="{{ section.settings.announcement_link }}" class="announcement-bar__link">
+          {%- if section.settings.announcement_text != blank -%}
+            <p class="announcement-bar__message">{{ section.settings.announcement_text | escape }}</p>
+          {%- endif -%}
+        </a>
+      {%- else -%}
+        {%- if section.settings.announcement_text != blank -%}
+          <p class="announcement-bar__message">{{ section.settings.announcement_text | escape }}</p>
+        {%- endif -%}
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Announcement Bar",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_announcement",
+      "label": "Enable Announcement Bar",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "announcement_text",
+      "label": "Announcement Text",
+      "default": "Welcome to everlink - A new era of personalisation"
+    },
+    {
+      "type": "url",
+      "id": "announcement_link",
+      "label": "Announcement Link"
+    },
+    {
+      "type": "color",
+      "id": "announcement_bg_color",
+      "label": "Background Color",
+      "default": "#6BA4CE"
+    },
+    {
+      "type": "color",
+      "id": "announcement_text_color",
+      "label": "Text Color",
+      "default": "#FFFFFF"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "main": {
+      "type": "collection-template",
+      "settings": {
+        "columns_desktop": 4,
+        "columns_mobile": 2,
+        "show_vendor": false,
+        "show_secondary_image": true
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

@@ -1,0 +1,133 @@
+<section class="collection-template" data-section-id="{{ section.id }}">
+  <div class="page-width">
+    <div class="collection-header">
+      <h1 class="collection-header__title">{{ collection.title }}</h1>
+      {%- if collection.description != blank -%}
+        <div class="collection-header__description rte">
+          {{ collection.description }}
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- if collection.products.size > 0 -%}
+      <div class="collection-filters">
+        <div class="collection-filters__item">
+          <label for="SortBy">{{ 'sections.collection_template.sort_by_label' | t }}</label>
+          <select name="sort_by" id="SortBy" aria-describedby="a11y-refresh-page-message">
+            <option value="manual">Featured</option>
+            <option value="best-selling">Best selling</option>
+            <option value="title-ascending">Alphabetically, A-Z</option>
+            <option value="title-descending">Alphabetically, Z-A</option>
+            <option value="price-ascending">Price, low to high</option>
+            <option value="price-descending">Price, high to low</option>
+            <option value="created-ascending">Date, old to new</option>
+            <option value="created-descending">Date, new to old</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="product-grid product-grid--{{ section.settings.columns_desktop }}-col">
+        {%- for product in collection.products -%}
+          {% render 'product-card',
+            product: product,
+            show_vendor: section.settings.show_vendor,
+            show_secondary_image: section.settings.show_secondary_image
+          %}
+        {%- endfor -%}
+      </div>
+
+      {%- if paginate.pages > 1 -%}
+        {% render 'pagination', paginate: paginate %}
+      {%- endif -%}
+    {%- else -%}
+      <div class="collection-empty">
+        <p>{{ 'sections.collection_template.empty' | t }}</p>
+        <a href="{{ routes.all_products_collection_url }}" class="button button--primary">
+          {{ 'general.continue_shopping' | t }}
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  .collection-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .collection-header__title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 1rem;
+    color: var(--color-primary);
+  }
+
+  .collection-header__description {
+    font-size: 1.125rem;
+    max-width: 800px;
+    margin: 0 auto;
+    color: var(--color-text);
+  }
+
+  .collection-filters {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 2rem;
+  }
+
+  .collection-filters__item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .collection-filters select {
+    padding: 0.5rem 1rem;
+    border: 2px solid var(--color-border);
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+
+  .collection-empty {
+    text-align: center;
+    padding: 4rem 0;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Collection",
+  "settings": [
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "label": "Columns (Desktop)",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "columns_mobile",
+      "min": 1,
+      "max": 2,
+      "step": 1,
+      "label": "Columns (Mobile)",
+      "default": 2
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "Show Vendor",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_secondary_image",
+      "label": "Show Secondary Image on Hover",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

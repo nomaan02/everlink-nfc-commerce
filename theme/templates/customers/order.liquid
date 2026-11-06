@@ -1,0 +1,143 @@
+<div class="customer-order page-width">
+  <h1 class="order__title">{{ 'customer.order.title' | t: name: order.name }}</h1>
+
+  <p class="order__date">{{ 'customer.order.date_html' | t: date: order.created_at | date: "%B %d, %Y" }}</p>
+
+  {%- if order.cancelled -%}
+    <p class="order__cancelled">
+      {{ 'customer.order.cancelled_html' | t: date: order.cancelled_at | date: "%B %d, %Y" }}
+    </p>
+    <p>{{ 'customer.order.cancelled_reason' | t: reason: order.cancel_reason_label }}</p>
+  {%- endif -%}
+
+  <table class="order__table">
+    <thead>
+      <tr>
+        <th>{{ 'customer.order.product' | t }}</th>
+        <th>{{ 'customer.order.sku' | t }}</th>
+        <th>{{ 'customer.order.price' | t }}</th>
+        <th>{{ 'customer.order.quantity' | t }}</th>
+        <th>{{ 'customer.order.total' | t }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {%- for line_item in order.line_items -%}
+        <tr>
+          <td>
+            {{ line_item.title }}
+            {%- unless line_item.variant.title == 'Default Title' -%}
+              <br>{{ line_item.variant.title }}
+            {%- endunless -%}
+          </td>
+          <td>{{ line_item.sku }}</td>
+          <td>{{ line_item.price | money }}</td>
+          <td>{{ line_item.quantity }}</td>
+          <td>{{ line_item.final_line_price | money }}</td>
+        </tr>
+      {%- endfor -%}
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="4">{{ 'customer.order.subtotal' | t }}</td>
+        <td>{{ order.line_items_subtotal_price | money }}</td>
+      </tr>
+      {%- if order.total_discounts > 0 -%}
+        <tr>
+          <td colspan="4">{{ 'customer.order.discount' | t }}</td>
+          <td>-{{ order.total_discounts | money }}</td>
+        </tr>
+      {%- endif -%}
+      <tr>
+        <td colspan="4">{{ 'customer.order.shipping' | t }}</td>
+        <td>{{ order.shipping_price | money }}</td>
+      </tr>
+      <tr>
+        <td colspan="4">{{ 'customer.order.tax' | t }}</td>
+        <td>{{ order.tax_price | money }}</td>
+      </tr>
+      <tr class="order__total">
+        <td colspan="4"><strong>{{ 'customer.order.total' | t }}</strong></td>
+        <td><strong>{{ order.total_price | money }}</strong></td>
+      </tr>
+    </tfoot>
+  </table>
+
+  <div class="order__details">
+    <div class="order__addresses">
+      <div class="order__billing">
+        <h3>{{ 'customer.order.billing_address' | t }}</h3>
+        <p>{{ order.billing_address | format_address }}</p>
+      </div>
+
+      <div class="order__shipping">
+        <h3>{{ 'customer.order.shipping_address' | t }}</h3>
+        <p>{{ order.shipping_address | format_address }}</p>
+      </div>
+    </div>
+  </div>
+
+  <a href="{{ routes.account_url }}" class="button button--secondary">
+    {{ 'customer.account.return' | t }}
+  </a>
+</div>
+
+<style>
+  .customer-order {
+    padding: 4rem 0;
+  }
+
+  .order__title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 1rem;
+    color: var(--color-primary);
+  }
+
+  .order__date {
+    margin-bottom: 2rem;
+    color: var(--color-text-light);
+  }
+
+  .order__table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 3rem;
+  }
+
+  .order__table th,
+  .order__table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .order__table th {
+    font-weight: 600;
+  }
+
+  .order__table tfoot td {
+    text-align: right;
+  }
+
+  .order__total {
+    font-size: 1.25rem;
+    border-top: 2px solid var(--color-border);
+  }
+
+  .order__addresses {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .order__addresses h3 {
+    margin-bottom: 1rem;
+    color: var(--color-text);
+  }
+
+  @media (max-width: 768px) {
+    .order__addresses {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
