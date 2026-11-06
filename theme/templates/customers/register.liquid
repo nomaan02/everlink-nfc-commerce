@@ -1,0 +1,103 @@
+<div class="customer-register page-width">
+  <div class="register-container">
+    <h1 class="register__title">{{ 'customer.register.title' | t }}</h1>
+
+    {% form 'create_customer', class: 'register-form' %}
+      {{ form.errors | default_errors }}
+
+      <div class="form-field">
+        <label for="FirstName">{{ 'customer.register.first_name' | t }}</label>
+        <input
+          type="text"
+          name="customer[first_name]"
+          id="FirstName"
+          autocomplete="given-name"
+          required
+        >
+      </div>
+
+      <div class="form-field">
+        <label for="LastName">{{ 'customer.register.last_name' | t }}</label>
+        <input
+          type="text"
+          name="customer[last_name]"
+          id="LastName"
+          autocomplete="family-name"
+          required
+        >
+      </div>
+
+      <div class="form-field">
+        <label for="RegisterEmail">{{ 'customer.register.email' | t }}</label>
+        <input
+          type="email"
+          name="customer[email]"
+          id="RegisterEmail"
+          autocomplete="email"
+          required
+        >
+      </div>
+
+      <div class="form-field">
+        <label for="RegisterPassword">{{ 'customer.register.password' | t }}</label>
+        <input
+          type="password"
+          name="customer[password]"
+          id="RegisterPassword"
+          autocomplete="new-password"
+          required
+        >
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="button button--primary">
+          {{ 'customer.register.submit' | t }}
+        </button>
+      </div>
+    {% endform %}
+
+    <div class="register__login">
+      <p>Already have an account?</p>
+      <a href="{{ routes.account_login_url }}">
+        {{ 'customer.login_page.title' | t }}
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .customer-register {
+    padding: 4rem 0;
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .register-container {
+    max-width: 500px;
+    width: 100%;
+    background: white;
+    padding: 3rem;
+    border-radius: 8px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  }
+
+  .register__title {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--color-primary);
+  }
+
+  .register__login {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .register__login p {
+    margin-bottom: 0.5rem;
+    color: var(--color-text-light);
+  }
+</style>

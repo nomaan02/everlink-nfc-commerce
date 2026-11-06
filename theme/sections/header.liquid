@@ -1,0 +1,139 @@
+{% liquid
+  assign logo = section.settings.logo
+  assign logo_width = section.settings.logo_width
+  assign menu = section.settings.menu
+%}
+
+<header class="header" data-section-id="{{ section.id }}" data-section-type="header">
+  <div class="header__wrapper page-width">
+    <button type="button" class="header__icon header__icon--menu mobile-menu-toggle" aria-label="Menu">
+      {% render 'icon-menu' %}
+    </button>
+
+    <div class="header__logo">
+      {%- if logo != blank -%}
+        <a href="{{ routes.root_url }}" class="header__logo-link">
+          {{ logo | image_url: width: logo_width | image_tag:
+            loading: 'lazy',
+            width: logo_width,
+            alt: shop.name
+          }}
+        </a>
+      {%- else -%}
+        <a href="{{ routes.root_url }}" class="header__logo-text">
+          everlink
+        </a>
+      {%- endif -%}
+    </div>
+
+    <nav class="header__nav desktop-nav" role="navigation">
+      <ul class="nav-list">
+        {%- for link in linklists[menu].links -%}
+          <li class="nav-item">
+            <a href="{{ link.url }}" class="nav-link {% if link.active %}nav-link--active{% endif %}">
+              {{ link.title }}
+            </a>
+
+            {%- if link.links != blank -%}
+              <ul class="nav-dropdown">
+                {%- for child_link in link.links -%}
+                  <li class="nav-dropdown__item">
+                    <a href="{{ child_link.url }}" class="nav-dropdown__link">
+                      {{ child_link.title }}
+                    </a>
+                  </li>
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+
+    <div class="header__icons">
+      <button type="button" class="header__icon header__icon--search" aria-label="Search">
+        {% render 'icon-search' %}
+      </button>
+
+      <a href="{{ routes.account_url }}" class="header__icon header__icon--account" aria-label="Account">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+        </svg>
+      </a>
+
+      <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart" aria-label="Cart" data-cart-icon>
+        {% render 'icon-cart' %}
+        <span class="cart-count-bubble {% if cart.item_count == 0 %}hidden{% endif %}" data-cart-count>
+          {{ cart.item_count }}
+        </span>
+      </a>
+    </div>
+  </div>
+
+  {%- comment -%} Mobile Navigation {%- endcomment -%}
+  <div class="mobile-nav" data-mobile-nav>
+    <div class="mobile-nav__header">
+      <button type="button" class="mobile-nav__close" aria-label="Close menu">
+        {% render 'icon-close' %}
+      </button>
+    </div>
+    <nav class="mobile-nav__content" role="navigation">
+      <ul class="mobile-nav__list">
+        {%- for link in linklists[menu].links -%}
+          <li class="mobile-nav__item">
+            <a href="{{ link.url }}" class="mobile-nav__link">
+              {{ link.title }}
+            </a>
+
+            {%- if link.links != blank -%}
+              <ul class="mobile-nav__sublist">
+                {%- for child_link in link.links -%}
+                  <li class="mobile-nav__subitem">
+                    <a href="{{ child_link.url }}" class="mobile-nav__sublink">
+                      {{ child_link.title }}
+                    </a>
+                  </li>
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo Image"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 50,
+      "max": 250,
+      "step": 10,
+      "default": 150,
+      "unit": "px",
+      "label": "Logo Width"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sticky_header",
+      "label": "Enable Sticky Header",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

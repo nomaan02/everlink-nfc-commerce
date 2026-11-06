@@ -1,0 +1,174 @@
+<article class="main-article" data-section-id="{{ section.id }}">
+  <div class="page-width">
+    <div class="article-header">
+      <h1 class="article__title">{{ article.title }}</h1>
+
+      <div class="article__meta">
+        <span>{{ article.published_at | date: "%B %d, %Y" }}</span>
+        <span>{{ article.author }}</span>
+        {%- if article.comments_count > 0 -%}
+          <span>{{ article.comments_count }} {{ 'blogs.article.comments.one' | t }}</span>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- if article.image -%}
+      <div class="article__image">
+        {{ article.image | image_url: width: 1200 | image_tag }}
+      </div>
+    {%- endif -%}
+
+    <div class="article__content rte">
+      {{ article.content }}
+    </div>
+
+    {%- if blog.comments_enabled? -%}
+      <div class="article__comments">
+        <h2>{{ 'blogs.article.comments.one' | t }}</h2>
+
+        {%- if article.comments.size > 0 -%}
+          {%- for comment in article.comments -%}
+            <div class="comment">
+              <div class="comment__author">{{ comment.author }}</div>
+              <div class="comment__date">{{ comment.created_at | date: "%B %d, %Y" }}</div>
+              <div class="comment__content">{{ comment.content }}</div>
+            </div>
+          {%- endfor -%}
+        {%- endif -%}
+
+        {% form 'new_comment', article, class: 'comment-form' %}
+          <h3>{{ 'blogs.article.comment_form_title' | t }}</h3>
+
+          {%- if form.posted_successfully? -%}
+            <p class="comment-form__success">
+              {%- if blog.moderated? -%}
+                {{ 'blogs.article.success_moderated' | t }}
+              {%- else -%}
+                {{ 'blogs.article.success' | t }}
+              {%- endif -%}
+            </p>
+          {%- endif -%}
+
+          {{ form.errors | default_errors }}
+
+          <div class="form-field">
+            <label for="CommentAuthor">{{ 'blogs.article.name' | t }}</label>
+            <input type="text" name="comment[author]" id="CommentAuthor" required>
+          </div>
+
+          <div class="form-field">
+            <label for="CommentEmail">{{ 'blogs.article.email' | t }}</label>
+            <input type="email" name="comment[email]" id="CommentEmail" required>
+          </div>
+
+          <div class="form-field">
+            <label for="CommentBody">{{ 'blogs.article.message' | t }}</label>
+            <textarea name="comment[body]" id="CommentBody" rows="6" required></textarea>
+          </div>
+
+          <button type="submit" class="button button--primary">
+            {{ 'blogs.article.post' | t }}
+          </button>
+        {% endform %}
+      </div>
+    {%- endif -%}
+
+    <div class="article__back">
+      <a href="{{ blog.url }}" class="button button--secondary">
+        {{ 'blogs.article.back_to_blog' | t }}
+      </a>
+    </div>
+  </div>
+</article>
+
+<style>
+  .main-article {
+    padding: 4rem 0;
+  }
+
+  .article-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .article__title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 1rem;
+    color: var(--color-primary);
+  }
+
+  .article__meta {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    color: var(--color-text-light);
+    font-size: 0.875rem;
+  }
+
+  .article__image {
+    margin-bottom: 3rem;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .article__image img {
+    width: 100%;
+    height: auto;
+  }
+
+  .article__content {
+    max-width: 800px;
+    margin: 0 auto 4rem;
+    font-size: 1.125rem;
+    line-height: 1.8;
+  }
+
+  .article__comments {
+    max-width: 800px;
+    margin: 0 auto 3rem;
+  }
+
+  .comment {
+    padding: 1.5rem;
+    background: var(--color-background-alt);
+    border-radius: 8px;
+    margin-bottom: 1rem;
+  }
+
+  .comment__author {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+
+  .comment__date {
+    font-size: 0.875rem;
+    color: var(--color-text-light);
+    margin-bottom: 0.5rem;
+  }
+
+  .comment-form {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: var(--color-background-alt);
+    border-radius: 8px;
+  }
+
+  .comment-form__success {
+    padding: 1rem;
+    background: var(--color-success);
+    color: white;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+  }
+
+  .article__back {
+    text-align: center;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Article",
+  "settings": []
+}
+{% endschema %}

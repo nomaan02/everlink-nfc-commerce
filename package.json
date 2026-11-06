@@ -1,0 +1,20 @@
+{
+  "name": "everlink-nfc-commerce",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Shopify order webhooks to a personal web page per NFC tag: a reference implementation.",
+  "license": "MIT",
+  "engines": { "node": ">=20.12" },
+  "scripts": {
+    "demo": "tsx src/demo.ts",
+    "start": "tsx src/start.ts",
+    "test": "tsx --test test/*.test.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  }
+}

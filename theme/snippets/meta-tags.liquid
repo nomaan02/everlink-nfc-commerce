@@ -1,0 +1,10 @@
+{%- comment -%}
+  Basic SEO meta tags
+{%- endcomment -%}
+
+<meta name="author" content="Everlink">
+<meta name="robots" content="index, follow">
+
+{%- if page_description -%}
+  <meta name="description" content="{{ page_description | escape }}">
+{%- endif -%}

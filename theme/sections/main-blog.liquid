@@ -1,0 +1,118 @@
+<section class="main-blog" data-section-id="{{ section.id }}">
+  <div class="page-width">
+    <h1 class="blog__title">{{ blog.title }}</h1>
+
+    {%- if blog.articles.size > 0 -%}
+      <div class="blog-grid">
+        {%- for article in blog.articles -%}
+          <article class="blog-card">
+            {%- if article.image -%}
+              <a href="{{ article.url }}" class="blog-card__image">
+                {{ article.image | image_url: width: 800 | image_tag:
+                  loading: 'lazy'
+                }}
+              </a>
+            {%- endif -%}
+
+            <div class="blog-card__content">
+              <h2 class="blog-card__title">
+                <a href="{{ article.url }}">{{ article.title }}</a>
+              </h2>
+
+              <div class="blog-card__meta">
+                <span>{{ article.published_at | date: "%B %d, %Y" }}</span>
+                {%- if article.comments_count > 0 -%}
+                  <span>{{ article.comments_count }} {{ 'blogs.article.comments.one' | t }}</span>
+                {%- endif -%}
+              </div>
+
+              {%- if article.excerpt != blank -%}
+                <div class="blog-card__excerpt">
+                  {{ article.excerpt }}
+                </div>
+              {%- endif -%}
+
+              <a href="{{ article.url }}" class="blog-card__read-more">
+                {{ 'blogs.article.read_more_title' | t: title: article.title }}
+              </a>
+            </div>
+          </article>
+        {%- endfor -%}
+      </div>
+
+      {%- if paginate.pages > 1 -%}
+        {% render 'pagination', paginate: paginate %}
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  .main-blog {
+    padding: 4rem 0;
+  }
+
+  .blog__title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    text-align: center;
+    margin-bottom: 3rem;
+    color: var(--color-primary);
+  }
+
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+  }
+
+  .blog-card {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease;
+  }
+
+  .blog-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .blog-card__image img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+  }
+
+  .blog-card__content {
+    padding: 2rem;
+  }
+
+  .blog-card__title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .blog-card__meta {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.875rem;
+    color: var(--color-text-light);
+    margin-bottom: 1rem;
+  }
+
+  .blog-card__excerpt {
+    margin-bottom: 1rem;
+    line-height: 1.6;
+  }
+
+  .blog-card__read-more {
+    color: var(--color-primary);
+    font-weight: 600;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Blog",
+  "settings": []
+}
+{% endschema %}

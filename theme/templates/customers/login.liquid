@@ -1,0 +1,131 @@
+<div class="customer-login page-width">
+  <div class="login-container">
+    <h1 class="login__title">{{ 'customer.login_page.title' | t }}</h1>
+
+    {% form 'customer_login', class: 'login-form' %}
+      {{ form.errors | default_errors }}
+
+      <div class="form-field">
+        <label for="CustomerEmail">{{ 'customer.login_page.email' | t }}</label>
+        <input
+          type="email"
+          name="customer[email]"
+          id="CustomerEmail"
+          autocomplete="email"
+          required
+        >
+      </div>
+
+      <div class="form-field">
+        <label for="CustomerPassword">{{ 'customer.login_page.password' | t }}</label>
+        <input
+          type="password"
+          name="customer[password]"
+          id="CustomerPassword"
+          autocomplete="current-password"
+          required
+        >
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="button button--primary">
+          {{ 'customer.login_page.sign_in' | t }}
+        </button>
+
+        <a href="{{ routes.account_recover_url }}" class="login__forgot">
+          {{ 'customer.login_page.forgot_password' | t }}
+        </a>
+      </div>
+    {% endform %}
+
+    <div class="login__create">
+      <p>{{ 'customer.login_page.create_account' | t }}</p>
+      <a href="{{ routes.account_register_url }}" class="button button--secondary">
+        {{ 'customer.register.title' | t }}
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .customer-login {
+    padding: 4rem 0;
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .login-container {
+    max-width: 500px;
+    width: 100%;
+    background: white;
+    padding: 3rem;
+    border-radius: 8px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  }
+
+  .login__title {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--color-primary);
+  }
+
+  .form-field {
+    margin-bottom: 1.5rem;
+  }
+
+  .form-field label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .form-field input {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid var(--color-border);
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+  }
+
+  .form-field input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+  }
+
+  .form-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .form-actions .button {
+    width: 100%;
+  }
+
+  .login__forgot {
+    text-align: center;
+    color: var(--color-text-light);
+    font-size: 0.875rem;
+  }
+
+  .login__forgot:hover {
+    color: var(--color-primary);
+  }
+
+  .login__create {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .login__create p {
+    margin-bottom: 1rem;
+    color: var(--color-text-light);
+  }
+</style>
