@@ -1,5 +1,5 @@
 # Everlink: NFC jewellery e-commerce
-
+**Status:** ⏸️ Paused proof of concept · real client project
 **Every piece of jewellery has an NFC chip. Tap it with a phone and it opens a personal page set up by its owner.**
 
 Everlink was a client project: a Shopify store for NFC-enabled jewellery, plus a separate web app where buyers claim their piece and build its page. The project is currently paused, and the client's production code is private. This repository shares, with the client's permission:
